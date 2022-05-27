@@ -1,4 +1,5 @@
 const { assert } = require("chai");
+const { ethers } = require("hardhat");
 
 describe("Escrow", function() {
   let contract;
@@ -6,6 +7,7 @@ describe("Escrow", function() {
   let beneficiary;
   let arbiter;
   const deposit = ethers.utils.parseEther("1");
+
   beforeEach(async () => {
     depositor = ethers.provider.getSigner(0);
     beneficiary = ethers.provider.getSigner(1);
@@ -25,13 +27,28 @@ describe("Escrow", function() {
   describe("after approval from address other than the arbiter", () => {
     it("should revert", async () => {
         let ex;
+
         try {
             await contract.connect(beneficiary).approve();
+        } catch (_ex) {
+          ex = _ex;
         }
-        catch (_ex) {
-            ex = _ex;
-        }
+
         assert(ex, "Attempted to approve the Escrow from the beneficiary address. Expected transaction to revert!");
+    });
+  });
+
+  describe("after rejection from address other than the arbiter", () => {
+    it("should revert", async () => {
+      let ex;
+
+      try {
+        await contract.connect(depositor).reject();
+      } catch (_ex) {
+        ex = _ex;
+      }
+
+      assert(ex, "Attempted to reject the Escrow from the depositor address. Expected transaction to revert!");
     });
   });
 
@@ -41,6 +58,15 @@ describe("Escrow", function() {
         const approve = await contract.connect(arbiter).approve();
         const after = await ethers.provider.getBalance(beneficiary.getAddress());
         assert.equal(after.sub(before).toString(), deposit.toString());
+    });
+  });
+
+  describe("after rejection from the arbiter", () => {
+    it("should transfer balance to depositor", async () => {
+      const before = await ethers.provider.getBalance(depositor.getAddress());
+      const reject = await contract.connect(arbiter).reject();
+      const after = await ethers.provider.getBalance(depositor.getAddress());
+      assert.equal(after.sub(before).toString(), deposit.toString());
     });
   });
 });

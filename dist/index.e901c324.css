@@ -1,13 +1,13 @@
 body {
-  background-color: rgb(2, 74, 36);
-  background-image: url('static/waterfall.jpg');
+  background-color: #024a24;
+  background-image: url("waterfall.9cc2814b.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
   display: flex;
   flex-direction: column;
-  font-family: 'Muli', sans-serif;
+  font-family: "Muli", sans-serif;
   padding: 0;
   margin: 0;
 }
@@ -18,8 +18,8 @@ body {
   max-width: 800px;
   padding: 2em;
   border-radius: 1em;
-  background-color: rgb(255, 255, 255, 0.8);
-  box-shadow: -2px 3px 5px rgb(100, 100, 100, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: -2px 3px 5px rgba(100, 100, 100, 0.5);
 }
 
 h1 {
@@ -44,7 +44,7 @@ label {
   margin: 0 0em 1em 0em;
 }
 
-input[type="text"] {
+input[type=text] {
   font-size: 1.15rem;
   margin: 0.2em 0 0 0;
 }
@@ -116,3 +116,4 @@ input[type="text"] {
   color: #841523;
   text-align: center;
 }
+/*# sourceMappingURL=index.e901c324.css.map */
